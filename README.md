@@ -4,7 +4,11 @@ This project was generated with [Angular CLI](https://github.com/angular/angular
 
 ## Development server
 
+Run `npm install` for installing all the dependencies for the project. 
+
 Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+
+if, port is alreadty running on `localhost:4200`, try running command `ng serve --port 7878` and run the application on `http://localhost:7878/`
 
 ## Code scaffolding
 

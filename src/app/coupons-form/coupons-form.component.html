@@ -1,0 +1,257 @@
+<div class="container-fluid">
+  <mat-list class="page-header">
+    <mat-list-item class="breadcrumbClass">Coupons:</mat-list-item>
+  </mat-list>
+  <mat-divider style="background-color: black !important; margin-bottom: 10px">
+  </mat-divider>
+  <div class="row justify-content-md-center">
+    <form [formGroup]="couponsFormGroup" (ngSubmit)="submit()">
+      <div class="row col-12">
+        <div class="col-sm-6">
+          <mat-form-field appearance="fill">
+            <mat-label>Coupon Type </mat-label>
+            <mat-select
+              formControlName="couponType"
+              required
+              placeholder="Coupon Type"
+            >
+              <mat-option *ngFor="let coupons of coupon" [value]="coupons">
+                {{ coupons.name }}
+              </mat-option>
+            </mat-select>
+            <mat-error
+              *ngIf="couponsFormControl.couponType.hasError('required')"
+              >Please choose a coupons</mat-error
+            >
+          </mat-form-field>
+        </div>
+        <div class="col-sm-6">
+          <mat-form-field class="example-full-width">
+            <mat-label
+              >Coupon Code <span *ngIf="isRequiredField">*</span></mat-label
+            >
+            <input
+              type="text"
+              matInput
+              formControlName="couponCode"
+              placeholder="Coupon Code"
+            />
+            <mat-error
+              *ngIf="couponsFormControl.couponType.hasError('required')"
+            >
+              Coupon Code is required
+            </mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="row col-12">
+        <div class="col-sm-6">
+          <mat-form-field appearance="fill">
+            <mat-label>Start Date</mat-label>
+            <input
+              matInput
+              [matDatepicker]="picker"
+              formControlName="startDate"
+              (dateChange)="dateChange($event)"
+              [min]="minDate"
+              [max]="maxDate"
+            />
+            <mat-datepicker-toggle
+              matSuffix
+              [for]="picker"
+            ></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+            <mat-error
+              *ngIf="couponsFormControl.startDate.hasError('required')"
+            >
+              Start Date is required
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <div class="col-sm-6">
+          <mat-form-field appearance="fill">
+            <mat-label>End Date</mat-label>
+            <input
+              matInput
+              [matDatepicker]="picker1"
+              formControlName="endDate"
+              (dateChange)="dat($event)"
+              [min]="minDate"
+              [max]="maxDate"
+            />
+            <mat-datepicker-toggle
+              matSuffix
+              [for]="picker1"
+            ></mat-datepicker-toggle>
+            <mat-datepicker #picker1></mat-datepicker>
+            <mat-error *ngIf="couponsFormControl.endDate.hasError('required')">
+              End Date is required
+            </mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="row col-12">
+        <div class="col-sm-6">
+          <mat-form-field appearance="fill">
+            <mat-label>Coupon Availability </mat-label>
+            <mat-select
+              formControlName="couponAvailability"
+              required
+              placeholder="Coupon Availability"
+            >
+              <mat-option
+                *ngFor="let coupons of couponAvailbility"
+                [value]="coupons"
+              >
+                {{ coupons.name }}
+              </mat-option>
+            </mat-select>
+            <mat-error
+              *ngIf="couponsFormControl.couponType.hasError('required')"
+              >Please choose a coupons</mat-error
+            >
+            <mat-hint>{{
+              couponsFormControl.couponAvailability.value?.value
+            }}</mat-hint>
+          </mat-form-field>
+        </div>
+        <div class="col-sm-6">
+          <mat-form-field appearance="fill">
+            <mat-label>Coupon Status </mat-label>
+            <mat-select
+              formControlName="couponStatus"
+              required
+              placeholder="Coupon Status"
+            >
+              <mat-option
+                *ngFor="let coupons of couponStatus"
+                [value]="coupons"
+              >
+                {{ coupons.name }}
+              </mat-option>
+            </mat-select>
+            <mat-error
+              *ngIf="couponsFormControl.couponStatus.hasError('required')"
+              >Please choose a coupons</mat-error
+            >
+            <mat-hint>{{
+              couponsFormControl.couponStatus.value?.value
+            }}</mat-hint>
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="row col-12" style="margin-left: 0px">
+        <mat-form-field class="example-full-width">
+          <mat-label>Terms & Condition</mat-label>
+          <textarea
+            matInput
+            placeholder="Terms and condition"
+            formControlName="tnc"
+          ></textarea>
+          <mat-error *ngIf="couponsFormControl.tnc.hasError('required')"
+            >Please fill Terms & Condition</mat-error
+          >
+        </mat-form-field>
+      </div>
+
+      <mat-list class="page-header">
+        <mat-list-item class="breadcrumbClass">Coupons Rules:</mat-list-item>
+      </mat-list>
+      <mat-divider style="background-color: black !important"> </mat-divider>
+      <div formArrayName="couponRules">
+        <div
+          *ngFor="let alias of couponRules.controls; let i = index"
+          [formGroupName]="i"
+        >
+          <div class="row col-12">
+            <div class="col-sm-6">
+              <mat-form-field class="example-full-width">
+                <mat-label
+                  >Min Ammount <span *ngIf="isRequiredField">*</span></mat-label
+                >
+                <input
+                  type="text"
+                  matInput
+                  formControlName="minAmmount"
+                  placeholder="Coupon Code"
+                />
+              </mat-form-field>
+            </div>
+            <div class="col-sm-6">
+              <mat-form-field class="example-full-width">
+                <mat-label
+                  >Max Ammount <span *ngIf="isRequiredField">*</span></mat-label
+                >
+                <input
+                  type="text"
+                  matInput
+                  formControlName="maxAmmount"
+                  placeholder="Coupon Code"
+                />
+              </mat-form-field>
+            </div>
+          </div>
+          <div class="row col-12">
+            <div class="col-sm-6">
+              <mat-form-field class="example-full-width">
+                <mat-label
+                  >Discount Ammount<span *ngIf="isRequiredField"
+                    >*</span
+                  ></mat-label
+                >
+                <input
+                  type="text"
+                  matInput
+                  formControlName="discountAmmount"
+                  placeholder="Coupon Code"
+                />
+              </mat-form-field>
+            </div>
+            <div class="col-sm-6">
+              <mat-form-field class="example-full-width">
+                <mat-label
+                  >Max Discount Ammount
+                  <span *ngIf="isRequiredField">*</span></mat-label
+                >
+                <input
+                  type="text"
+                  matInput
+                  formControlName="maxDiscountAmmount"
+                  placeholder="Coupon Code"
+                />
+              </mat-form-field>
+            </div>
+          </div>
+          <div class="row col-12" style="margin-left: 0px">
+            <mat-form-field appearance="fill">
+              <mat-label>Discount Type</mat-label>
+              <mat-select
+                formControlName="discountType"
+                required
+                placeholder="Discount Type"
+              >
+                <mat-option
+                  *ngFor="let discount of discountType"
+                  [value]="discount"
+                >
+                  {{ discount.name }}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+      
+        </div>
+        <div class="row col-12">
+            <div class="col-sm-8"></div>
+            <div class="col-sm-4">
+              <button mat-button color="primary"  type="button" (click)="add()">
+                <mat-icon>add</mat-icon>
+                Add more
+              </button>
+            </div>
+          </div>
+      </div>
+      <button mat-raised-button color="primary" type="submit">Save</button>
+    </form>
+  </div>
+</div>
